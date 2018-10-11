@@ -48,12 +48,14 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter = new CommonAdapter<TestBean>(this, mDatas, R.layout.item_flow) {
             @Override
-            public void convert(ViewHolder holder, TestBean testBean) {
+            public void convert(ViewHolder holder, final TestBean testBean) {
                 Log.d("zxt", "convert() called with: holder = [" + holder + "], testBean = [" + testBean + "]");
                 holder.setText(R.id.tv, testBean.getName() + testBean.getUrl());
                 holder.setOnClickListener(R.id.tv, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        testBean.setName(testBean.getName()+"1");
+                        notifyDataSetChanged();
                         Log.e("TAG1", "onClick() called with: v = [" + v + "]");
                     }
                 });
@@ -157,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
     public List<TestBean> initDatas() {
         mDatas = new ArrayList<>();
-        for (int j = 0; j < 1; j++) {
+        for (int j = 0; j < 20; j++) {
             mDatas.add(new TestBean((i++) + "  ", "张旭童"));
             mDatas.add(new TestBean((i++) + " ", "旭童"));
             mDatas.add(new TestBean((i++) + " ", "多种type"));

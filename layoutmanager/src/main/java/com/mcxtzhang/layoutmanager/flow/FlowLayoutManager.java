@@ -54,12 +54,14 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
         detachAndScrapAttachedViews(recycler);
 
         //初始化区域
+        int tmpVerticalOffset = mVerticalOffset;
         mVerticalOffset = 0;
         mFirstVisiPos = 0;
         mLastVisiPos = getItemCount();
 
         //初始化时调用 填充childView
         fill(recycler, state);
+        scrollVerticallyBy(tmpVerticalOffset, recycler, state);
 
 
     }
@@ -245,7 +247,7 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
         if(0==realOffset){
             return realOffset;
         }
-        
+
         realOffset = fill(recycler, state, realOffset);//先填充，再位移。
 
         mVerticalOffset += realOffset;//累加实际滑动距离
